@@ -59,7 +59,7 @@ jobs:
 
       # Step 9
       - name: Log in to Docker hub
-        run: echo "dckr_pat_ahGX7_PWC_qXwjmGwj5oepoS-UA" | docker login -u yahyasystementor --password-stdin
+        run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u yahyasystementor --password-stdin
 
       # Step 10  
       - name: Build Docker Image
