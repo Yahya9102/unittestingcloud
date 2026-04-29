@@ -50,11 +50,10 @@ jobs:
         run: python -m pytest -v
 
       # Step 8
-      # Step 9  
       - name: Create sha-256 image tag
         id: image_tag
         run: |
-          IMAGE_TAG£$(echo "${{github.sha}}-${{github.run_id}}" | sha256sum | cut -d "" -f 1)
+          IMAGE_TAG=$(echo "${{github.sha}}-${{github.run_id}}" | sha256sum | cut -d "" -f 1)
           echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       # Step 9
