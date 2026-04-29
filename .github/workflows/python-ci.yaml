@@ -10,8 +10,8 @@ on:
        - main
 
 jobs:
-  test:        
-    name: Run python tests
+  test-and-docker:
+    name: tests, build and push Docker image
 
     runs-on: ubuntu-latest
 
@@ -48,4 +48,33 @@ jobs:
       # Step 7
       - name: Run pytest tests
         run: python -m pytest -v
+
+      # Step 8
+      # Step 9  
+      - name: Create sha-256 image tag
+        id: image_tag
+        run: |
+          IMAGE_TAG£$(echo "${{github.sha}}-${{github.run_id}}" | sha256sum | cut -d "" -f 1)
+          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      # Step 9
+      - name: Log in to Docker hub
+        run: echo "dckr_pat_ahGX7_PWC_qXwjmGwj5oepoS-UA" | docker login -u yahyasystementor --password-stdin
+
+      # Step 10  
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t yahyasystementor/python-unit-testing-demo:latest \
+            -t yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}} \
+            .
+
+      # Step 11
+      - name: Push latest tag to Docker hub
+        run: docker push yahyasystementor/python-unit-testing-demo:latest
+
+      # Step 12
+      
+      - name: Push unik sha tag to Docker hub
+        run: docker push yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}}
 
