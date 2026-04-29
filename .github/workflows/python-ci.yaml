@@ -63,7 +63,10 @@ jobs:
       # Step 10  
       - name: Build Docker Image
         run: |
-          docker build -t yahyasystementor/python-unit-testing-demo:latest -t yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}} .
+          docker build 
+            -t yahyasystementor/python-unit-testing-demo:latest \
+            -t yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}} \
+            .
 
       # Step 11
       - name: Push latest tag to Docker hub
