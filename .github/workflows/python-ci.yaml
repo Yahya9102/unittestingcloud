@@ -50,12 +50,13 @@ jobs:
         run: python -m pytest -v
 
       # Step 8
-      - name: Create SHA-256 image tag
+      - name: Create sha-256 image tag
         id: image_tag
-        run: |
-          IMAGE_TAG=$(echo "${{ github.sha }}-${{ github.run_id }}" | sha256sum | cut -d " " -f 1)
-          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+        run:  |
+          IMAGE_TAG=$(echo "${{ github.sha }}-${{ github.run_id }}" | sha256sum | cut -d "" -f 1)
+          echo "tag=$IMAGE_TAG >> $GITHUB_OUTPUT
 
+        
       # Step 9
       - name: Log in to Docker hub
         run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u yahyasystementor --password-stdin
